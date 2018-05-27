@@ -23,12 +23,14 @@ namespace Timoshenko.Nsudetnet.NumberGuesser
             List<string> experienceList = new List<string>();
 
             DateTime start = DateTime.Now;
-           
+
+            int chosenValue;
 
             while (true)
             {
                 Console.WriteLine("Let's play one game.You chould guess the number in my mind.Write a number from 0 to 100:");
                 string line = Console.ReadLine();
+                Boolean good = int.TryParse(line,out chosenValue);
 
                 if (line.Contains("q"))
                 {
@@ -37,10 +39,8 @@ namespace Timoshenko.Nsudetnet.NumberGuesser
                     return;
                 }
 
-                try
+                if (good)
                 {
-                    int chosenValue = int.Parse(line);
-
                     if (chosenValue == number)
                     {
                         Console.WriteLine("OOOOOOOYYYEEEE.REALLY.I GUESSED IT.Congrats!", experienceList.Count);
@@ -63,12 +63,9 @@ namespace Timoshenko.Nsudetnet.NumberGuesser
                         experienceList.Add(String.Format(" {0} > {1}", chosenValue, number));
                     }
                 }
-                catch (FormatException)
-                {
-                    Console.WriteLine("There is not a number or a symbol q.");
-                    Console.ReadLine();
-                    return;
-                }
+                else
+                    Console.WriteLine("No,you should write a number or a symbol q to exit.");
+
 
 
                 if (experienceList.Count % 4 == 0)
