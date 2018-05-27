@@ -50,15 +50,21 @@ namespace Timoshenko.Nsudotnet.LinesCounter
                     while ((line = streamReader.ReadLine()) != null)
                     {
                         Console.WriteLine(line);
-
-                        if (line.Equals("") || line.StartsWith("//")) continue;
-
+                        if (line == ("") || line.StartsWith("//")|| line.StartsWith("\t//")) continue;
                         if (line.StartsWith("/*")) multiComment = true;
 
                         if (!multiComment)
                         {
-                            count++;
-                            Console.WriteLine(count);
+                            for (int i = 0; i < line.Length; i++)
+                            {
+                                if (!(line[i] >= '0' && line[i] <= '9') && (line.Contains(" ")))
+                                {
+                                    continue;
+                                }
+                                else
+                                    count++;
+                                Console.WriteLine(count);
+                            }
                         }
 
                         if (line.EndsWith("*/")) multiComment = false;
@@ -73,5 +79,3 @@ namespace Timoshenko.Nsudotnet.LinesCounter
 
     }
 }
-
-
